@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet data-dc-atomics="">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+
+<link href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css" rel="stylesheet">
+<style>
+  h1,h2{font-family:'Helvetica Neue',Helvetica,Arial,sans-serif}
+  h3{font-family:'Helvetica Neue',Helvetica,Arial,sans-serif}
+  *{box-sizing:border-box}
+  body{margin:0;font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;color:#1d252c;background:#fff;-webkit-font-smoothing:antialiased}
+  a{color:inherit;text-decoration:none}
+  a.vc-link{color:#1d252c}
+  a.vc-link:hover{color:#000}
+  ::selection{background:#1971d4;color:#fff}
+  button,select,input,a{transition:box-shadow .15s ease,background-color .15s ease,border-color .15s ease}
+  button:focus-visible,select:focus-visible,input:focus-visible{outline:none;box-shadow:0 0 0 3px rgba(29,37,44,.24)}
+  [class^="ri-"],[class*=" ri-"]{font-style:normal;line-height:1;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0}
+  .vc-acc:hover .vc-acc-img{transform:scale(1.04)}
+  .vc-tile:hover .vc-tile-img{transform:scale(1.04)}
+  .vc-link:hover{text-decoration:underline}
+  .vc-toplinks a{transition:color .15s ease}
+  .vc-toplinks a:hover{color:#1d252c}
+  .vc-toplinks a.is-active{color:#1d252c;border-bottom:2px solid #1d252c}
+  @media(max-width:1000px){
+    .vc-toplinks{display:none !important}
+    .vc-acc-grid{grid-template-columns:1fr 1fr !important}
+    .vc-tiles{grid-template-columns:1fr 1fr !important}
+    .vc-wide{grid-column:span 2 !important}
+    .vc-feat{grid-template-columns:1fr 1fr !important}
+    .vc-split{grid-template-columns:1fr !important}
+    .vc-vehbar-inner{flex-wrap:wrap !important;gap:12px !important}
+  }
+  @media(max-width:640px){
+    .vc-acc-grid,.vc-tiles,.vc-feat{grid-template-columns:1fr !important}
+    .vc-wide{grid-column:auto !important;grid-template-columns:1fr !important}
+  }
+</style>
+</helmet>
+<div style="min-height:100vh;background:{{ pageBg }}">
+
+  <!-- announcement bar -->
+  <header style="position: sticky; top: 0; z-index: 40; backdrop-filter: blur(10px); border-bottom: 1px solid var(--line); background-color: #ffffffE6">
+    <div style="max-width:1440px;margin:0 auto;padding:0 clamp(16px,4vw,40px);height:64px;display:flex;align-items:center;gap:clamp(16px,4vw,44px)">
+      <a onClick="{{ goHome }}" style="display:flex;align-items:center;gap:12px;cursor:pointer">
+        <img src="uploads/SOA_Primary_HOR_600x150.jpeg" alt="Subaru" style="height:34px;width:auto;display:block;mix-blend-mode:multiply">
+      </a>
+      <nav class="vc-toplinks" style="display:flex;gap:26px;font-size:14px;font-weight:700;color:var(--ink)">
+        <a href="Subaru Home.dc.html" style="cursor:pointer;padding:4px 0;color:var(--muted)">Home</a>
+        <a href="Subaru Accessories Home.dc.html" class="is-active" style="cursor:pointer;padding:4px 0">Accessories</a>
+        <a href="Subaru Outback Parts.dc.html" style="cursor:pointer;padding:4px 0;color:var(--muted)">Parts</a>
+        <a href="Subaru Outback Accessories.dc.html" style="cursor:pointer;padding:4px 0;color:var(--muted)">Lifestyle</a>
+      </nav>
+      <div style="flex:1"></div>
+      <div style="display:flex;align-items:center;gap:8px;background:#fff;border:1px solid var(--line);border-radius:4px;padding:8px 14px;min-width:clamp(120px,22vw,300px)">
+        <i class="ri-search-line" style="font-size:17px;color:#5c6163"></i>
+        <input value="{{ search }}" onInput="{{ onSearch }}" placeholder="Search" style="border:none;outline:none;background:none;font-family:inherit;font-size:14px;width:100%;color:var(--ink)">
+      </div>
+      <button onClick="{{ goAccount }}" title="Account" style="border:none;background:none;cursor:pointer;padding:6px;color:var(--ink);display:flex">
+        <i class="ri-user-line" style="font-size:22px"></i>
+      </button>
+      <button onClick="{{ openCart }}" title="Cart" style="position:relative;border:none;background:none;cursor:pointer;padding:6px;color:var(--ink);display:flex">
+        <i class="ri-shopping-cart-2-line" style="font-size:22px"></i>
+        <sc-if value="{{ hasCart }}" hint-placeholder-val="{{ true }}"><span style="position:absolute;top:-1px;right:-1px;background:var(--ac,#1971d4);color:#fff;font-size:10px;font-weight:700;min-width:16px;height:16px;border-radius:4px;display:flex;align-items:center;justify-content:center;padding:0 4px">{{ cartCount }}</span></sc-if>
+      </button>
+    </div>
+  </header>
+
+  <!-- slim header -->
+  
+
+  <!-- vehicle context bar -->
+  <div style="background:#1971d4;color:#fff">
+    <div class="vc-vehbar-inner" style="max-width:1280px;margin:0 auto;padding:11px clamp(16px,4vw,40px);display:flex;align-items:center;gap:18px;font-size:13.5px">
+      <span style="display:flex;align-items:center;gap:9px;font-weight:700"><i class="ri-car-line" style="font-size:17px"></i>Shopping for</span>
+      <span style="font-weight:700">2026 Subaru Outback 2.4L Turbo R-WILDERNESS</span>
+      <div style="flex:1"></div>
+      <a href="Subaru Home.dc.html" style="border:1px solid rgba(255,255,255,.35);background:none;color:#fff;font-family:inherit;font-size:13px;font-weight:700;padding:6px 15px;border-radius:4px;cursor:pointer">Change vehicle</a>
+    </div>
+  </div>
+
+  <!-- hero -->
+  <section style="position:relative;background:#1d252c;color:#fff;overflow:hidden">
+    <div style="position:absolute;inset:0;background:url('uploads/d-hero-acc-default.jpg') right center/cover no-repeat #222"></div>
+    <div style="position:relative;max-width:1280px;margin:0 auto;padding:{{ heroPadY }} clamp(16px,4vw,40px)">
+      <div style="display:flex;align-items:center;gap:8px;font-size:12.5px;color:rgba(255,255,255,.6);margin-bottom:18px">
+        <a href="Subaru Home.dc.html" style="cursor:pointer">Home</a><span>/</span><span style="color:#fff">Accessories</span>
+      </div>
+      <p style="font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.6);margin:0 0 12px">Genuine Subaru Accessories</p>
+      <h1 style="font-size:clamp(28px,4vw,48px);font-weight:700;letter-spacing:0;line-height:1.08;margin:0 0 16px;max-width:16ch">Accessories made for your Outback.</h1>
+      <p style="font-size:16px;line-height:1.55;color:rgba(255,255,255,.78);max-width:48ch;margin:0 0 26px">Everything you see is guaranteed to fit your 2026 Outback — designed, engineered and crash-tested by Subaru.</p>
+      <a href="Subaru Outback Accessories.dc.html" style="display:inline-flex;align-items:center;gap:9px;background:#fff;color:#1d252c;font-family:inherit;font-size:14.5px;font-weight:700;padding:14px 28px;border-radius:4px;cursor:pointer">Shop all accessories <i class="ri-arrow-right-line" style="font-size:17px"></i></a>
+    </div>
+  </section>
+
+  <main style="max-width:1280px;margin:0 auto;padding:0 clamp(16px,4vw,40px)">
+
+    <!-- shop by category (large tiles) -->
+    <section style="padding:{{ secPad }}">
+      <h2 style="font-size:22px;font-weight:{{ h2Weight }};margin:0 0 22px;letter-spacing:0">Shop by Category</h2>
+      <div class="vc-acc-grid" style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px">
+        <a href="Subaru Outback Accessories.dc.html" class="vc-acc" style="cursor:pointer;display:flex;flex-direction:column;overflow:hidden;background:#1d252c;color:#fff"><div style="position:relative;overflow:hidden;background:#1d252c;aspect-ratio:16/10"><div class="vc-acc-img" style="position:absolute;inset:0;transition:transform .5s ease;background:url('uploads/d-tile-audio-media.jpg') center/cover no-repeat"></div></div><div style="padding:28px 28px 32px;display:flex;flex-direction:column;justify-content:flex-start"><div style="display:flex;align-items:center;gap:10px;font-size:20px;font-weight:700;margin-bottom:8px">Audio Media<i class="ri-external-link-line" style="font-size:16px"></i></div><div style="font-size:15px;line-height:1.4">Stay charged, connected, and entertained during your travels.</div></div></a>
+        <a href="Subaru Outback Accessories.dc.html" class="vc-acc" style="cursor:pointer;display:flex;flex-direction:column;overflow:hidden;background:#1d252c;color:#fff"><div style="position:relative;overflow:hidden;background:#1d252c;aspect-ratio:16/10"><div class="vc-acc-img" style="position:absolute;inset:0;transition:transform .5s ease;background:url('uploads/d-tile-comfort-convenience.jpg') center/cover no-repeat"></div></div><div style="padding:28px 28px 32px;display:flex;flex-direction:column;justify-content:flex-start"><div style="display:flex;align-items:center;gap:10px;font-size:20px;font-weight:700;margin-bottom:8px">Comfort Convenience<i class="ri-external-link-line" style="font-size:16px"></i></div><div style="font-size:15px;line-height:1.4">Make any driving experience more comfortable and satisfying.</div></div></a>
+        <a href="Subaru Outback Accessories.dc.html" class="vc-acc" style="cursor:pointer;display:flex;flex-direction:column;overflow:hidden;background:#1d252c;color:#fff"><div style="position:relative;overflow:hidden;background:#1d252c;aspect-ratio:16/10"><div class="vc-acc-img" style="position:absolute;inset:0;transition:transform .5s ease;background:url('uploads/d-tile-lifestyle.jpg') center/cover no-repeat"></div></div><div style="padding:28px 28px 32px;display:flex;flex-direction:column;justify-content:flex-start"><div style="display:flex;align-items:center;gap:10px;font-size:20px;font-weight:700;margin-bottom:8px">Lifestyle<i class="ri-external-link-line" style="font-size:16px"></i></div><div style="font-size:15px;line-height:1.4">Increase your vehicle’s cargo-carrying capacity.</div></div></a>
+        <a href="Subaru Outback Accessories.dc.html" class="vc-acc vc-wide" style="cursor:pointer;grid-column:span 3;display:grid;grid-template-columns:2fr 1fr;overflow:hidden;background:#1d252c;color:#fff;min-height:340px"><div style="position:relative;overflow:hidden;background:#1d252c;min-height:240px"><div class="vc-acc-img" style="position:absolute;inset:0;transition:transform .5s ease;background:url('uploads/d-tile-pet-friendly.jpg') center/cover no-repeat"></div></div><div style="padding:28px 28px 32px;display:flex;flex-direction:column;justify-content:flex-end"><div style="display:flex;align-items:center;gap:10px;font-size:20px;font-weight:700;margin-bottom:8px">Pet-Friendly<i class="ri-external-link-line" style="font-size:16px"></i></div><div style="font-size:15px;line-height:1.4">Keep your furry friends safe and comfortable on the road.</div></div></a>
+        <a href="Subaru Outback Accessories.dc.html" class="vc-acc" style="cursor:pointer;display:flex;flex-direction:column;overflow:hidden;background:#1d252c;color:#fff"><div style="position:relative;overflow:hidden;background:#1d252c;aspect-ratio:16/10"><div class="vc-acc-img" style="position:absolute;inset:0;transition:transform .5s ease;background:url('uploads/d-tile-protection-security.jpg') center/cover no-repeat"></div></div><div style="padding:28px 28px 32px;display:flex;flex-direction:column;justify-content:flex-start"><div style="display:flex;align-items:center;gap:10px;font-size:20px;font-weight:700;margin-bottom:8px">Protection Security<i class="ri-external-link-line" style="font-size:16px"></i></div><div style="font-size:15px;line-height:1.4">Preserve and protect your vehicle, inside and out.</div></div></a>
+        <a href="Subaru Outback Accessories.dc.html" class="vc-acc" style="cursor:pointer;display:flex;flex-direction:column;overflow:hidden;background:#1d252c;color:#fff"><div style="position:relative;overflow:hidden;background:#1d252c;aspect-ratio:16/10"><div class="vc-acc-img" style="position:absolute;inset:0;transition:transform .5s ease;background:url('uploads/d-tile-sti-brand.jpg') center/cover no-repeat"></div></div><div style="padding:28px 28px 32px;display:flex;flex-direction:column;justify-content:flex-start"><div style="display:flex;align-items:center;gap:10px;font-size:20px;font-weight:700;margin-bottom:8px">STI Brand<i class="ri-external-link-line" style="font-size:16px"></i></div><div style="font-size:15px;line-height:1.4">Give your vehicle a sporty edge that is sure to turn heads.</div></div></a>
+        <a href="Subaru Outback Accessories.dc.html" class="vc-acc" style="cursor:pointer;display:flex;flex-direction:column;overflow:hidden;background:#1d252c;color:#fff"><div style="position:relative;overflow:hidden;background:#1d252c;aspect-ratio:16/10"><div class="vc-acc-img" style="position:absolute;inset:0;transition:transform .5s ease;background:url('uploads/d-tile-style.jpg') center/cover no-repeat"></div></div><div style="padding:28px 28px 32px;display:flex;flex-direction:column;justify-content:flex-start"><div style="display:flex;align-items:center;gap:10px;font-size:20px;font-weight:700;margin-bottom:8px">Style<i class="ri-external-link-line" style="font-size:16px"></i></div><div style="font-size:15px;line-height:1.4">Outfit your vehicle to complement your personal style.</div></div></a>
+      </div>
+    </section>
+
+    <!-- browse all categories (compact tiles) -->
+    <section style="padding:{{ secPad }}">
+      <h2 style="font-size:22px;font-weight:{{ h2Weight }};margin:0 0 22px;letter-spacing:0">Featured Collections</h2>
+      <div class="vc-tiles" style="display:grid;grid-template-columns:repeat(4,1fr);gap:{{ gap }}">
+        <sc-for list="{{ tiles }}" as="c" hint-placeholder-count="8">
+          <a href="{{ c.href }}" class="vc-tile" style="cursor:pointer;display:block;border:1px solid #e1e4e6;border-radius:4px;overflow:hidden;background:#fff">
+            <div style="aspect-ratio:4/3;background:#ffffff;overflow:hidden;display:flex;align-items:center;justify-content:center">
+              <div class="vc-tile-img" style="width:100%;height:100%;transition:transform .4s ease;background:{{ c.img }}"></div>
+            </div>
+            <div style="padding:13px 15px;display:flex;align-items:center;justify-content:space-between">
+              <span style="font-size:14px;font-weight:700">{{ c.name }}</span>
+              <span style="font-size:12px;color:#7d8387">{{ c.count }}</span>
+            </div>
+          </a>
+        </sc-for>
+      </div>
+    </section>
+
+    <!-- most popular -->
+    <section style="padding:{{ secPad }}">
+      <div style="display:flex;align-items:baseline;justify-content:space-between;gap:16px;margin-bottom:22px">
+        <h2 style="font-size:22px;font-weight:{{ h2Weight }};margin:0;letter-spacing:0">Most Popular</h2>
+        <a href="Subaru Outback Accessories.dc.html" class="vc-link" style="font-size:12.5px;font-weight:700;letter-spacing:.06em;cursor:pointer">SHOP ALL <i class="ri-arrow-right-s-line" style="font-size:15px;vertical-align:-3px"></i></a>
+      </div>
+      <div class="vc-feat" style="display:grid;grid-template-columns:repeat(4,1fr);gap:{{ gap }}">
+        <sc-for list="{{ featured }}" as="p" hint-placeholder-count="4">
+          <a href="{{ p.href }}" class="vc-tile" style="display:flex;flex-direction:column;cursor:pointer">
+            <div style="aspect-ratio:{{ featAspect }};background:#f4f5f6;border-radius:4px;overflow:hidden;display:flex;align-items:center;justify-content:center">
+              <div class="vc-tile-img" style="width:100%;height:100%;transition:transform .4s ease;background:{{ p.img }}"></div>
+            </div>
+            <div style="padding:14px 4px 0;display:flex;flex-direction:column;gap:5px">
+              <div style="font-size:11.5px;color:#7d8387">{{ p.cat }}</div>
+              <h3 style="font-size:15.5px;font-weight:700;line-height:1.28;margin:0">{{ p.name }}</h3>
+              <div style="font-size:12.5px;color:#5c6163;display:flex;align-items:center;gap:6px"><i class="ri-check-line" style="font-size:14px;color:#2e7d32"></i>Fits your 2026 Outback</div>
+              <div style="margin-top:6px;font-size:16px;font-weight:700">{{ p.price }}</div>
+            </div>
+          </a>
+        </sc-for>
+      </div>
+    </section>
+  </main>
+
+  <!-- lifestyle band -->
+  <section style="margin-top:clamp(40px,5vw,64px)">
+    
+  </section>
+
+  <!-- footer -->
+  <footer style="background:#1d252c;color:#fff">
+    <div style="max-width:1280px;margin:0 auto;padding:clamp(32px,4vw,48px) clamp(16px,4vw,40px);display:flex;justify-content:space-between;gap:40px;flex-wrap:wrap">
+      <div style="display:flex;gap:clamp(40px,6vw,90px);flex-wrap:wrap">
+        <div><div style="font-size:13.5px;font-weight:700;margin-bottom:12px">Shop</div><div style="display:flex;flex-direction:column;gap:9px;font-size:13px;color:#c9ced2"><a href="Subaru Outback Accessories.dc.html" style="cursor:pointer">Most Popular</a><a href="Subaru Outback Accessories.dc.html" style="cursor:pointer">Exterior</a><a href="Subaru Outback Accessories.dc.html" style="cursor:pointer">Interior</a></div></div>
+        <div><div style="font-size:13.5px;font-weight:700;margin-bottom:12px">Legal</div><div style="display:flex;flex-direction:column;gap:9px;font-size:13px;color:#c9ced2"><a style="cursor:pointer">Policies</a></div></div>
+        <div><div style="font-size:13.5px;font-weight:700;margin-bottom:12px">Links</div><div style="display:flex;flex-direction:column;gap:9px;font-size:13px;color:#c9ced2"><a href="Subaru Home.dc.html" style="cursor:pointer">Home</a><a style="cursor:pointer">Retailer Login</a></div></div>
+      </div>
+      <div style="display:flex;gap:18px;color:#c9ced2;font-size:19px">
+        <i class="ri-youtube-fill" style="cursor:pointer"></i><i class="ri-twitter-fill" style="cursor:pointer"></i><i class="ri-pinterest-fill" style="cursor:pointer"></i><i class="ri-instagram-line" style="cursor:pointer"></i><i class="ri-facebook-fill" style="cursor:pointer"></i>
+      </div>
+    </div>
+    <div style="border-top:1px solid #3a444c">
+      <div style="max-width:1280px;margin:0 auto;padding:16px clamp(16px,4vw,40px);display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;font-size:11px;color:#9aa1a6">
+        <span style="max-width:70ch;line-height:1.5">While every reasonable effort is made to ensure the accuracy of this data, we are not responsible for any errors or omissions contained on these pages.</span>
+        <span>© 2026 Subaru</span>
+      </div>
+    </div>
+  </footer>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1280,&quot;height&quot;:2200},&quot;vibe&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;Showroom&quot;,&quot;Editorial&quot;,&quot;Minimal&quot;],&quot;default&quot;:&quot;Showroom&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Feel&quot;,&quot;label&quot;:&quot;Visual vibe&quot;},&quot;imagery&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;Immersive&quot;,&quot;Balanced&quot;],&quot;default&quot;:&quot;Immersive&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Feel&quot;,&quot;label&quot;:&quot;Imagery scale&quot;},&quot;rhythm&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;Spacious&quot;,&quot;Standard&quot;,&quot;Compact&quot;],&quot;default&quot;:&quot;Standard&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Feel&quot;,&quot;label&quot;:&quot;Spacing rhythm&quot;}}">
+class Component extends DCLogic {
+  img(file){ return `#ffffff url('${file}') center/cover no-repeat`; }
+  renderVals(){
+    const RESULTS = 'Subaru Outback Accessories.dc.html';
+    const P = this.props || {};
+
+    // ---- Expressive feel controls ----
+    const vibe = P.vibe || 'Showroom';
+    const imagery = P.imagery || 'Immersive';
+    const rhythm = P.rhythm || 'Standard';
+
+    // vibe reshapes scrim, page tone, heading weight, and how category tiles present
+    const vibes = {
+      Showroom: {
+        pageBg:'#ffffff', h2Weight:500,
+        heroScrim:'linear-gradient(90deg,rgba(29,37,44,.92) 0%,rgba(29,37,44,.55) 55%,rgba(29,37,44,.2) 100%)',
+        catOverlay:'linear-gradient(180deg,rgba(0,0,0,.15) 0%,rgba(0,0,0,.05) 45%,rgba(0,0,0,.78) 100%)',
+        capBg:'transparent', capTitle:'#ffffff', capBlurb:'rgba(255,255,255,.72)',
+      },
+      Editorial: {
+        pageBg:'#ffffff', h2Weight:400,
+        heroScrim:'linear-gradient(90deg,rgba(29,37,44,.7) 0%,rgba(29,37,44,.28) 55%,rgba(29,37,44,.05) 100%)',
+        catOverlay:'linear-gradient(180deg,rgba(0,0,0,0) 55%,rgba(0,0,0,0) 100%)',
+        capBg:'#ffffff', capTitle:'#1d252c', capBlurb:'#5c6163',
+      },
+      Minimal: {
+        pageBg:'#ffffff', h2Weight:500,
+        heroScrim:'linear-gradient(90deg,rgba(29,37,44,.85) 0%,rgba(29,37,44,.45) 55%,rgba(29,37,44,.15) 100%)',
+        catOverlay:'linear-gradient(180deg,rgba(0,0,0,0) 40%,rgba(0,0,0,.55) 100%)',
+        capBg:'transparent', capTitle:'#ffffff', capBlurb:'rgba(255,255,255,.7)',
+      },
+    };
+    const v = vibes[vibe] || vibes.Showroom;
+    const capAbsolute = v.capBg === 'transparent';
+
+    // imagery scale reshapes hero height + tile aspect ratios (photo-forwardness)
+    const heroPadY = imagery === 'Immersive' ? 'clamp(64px,9vw,132px)' : 'clamp(40px,6vw,84px)';
+    const catAspect = imagery === 'Immersive' ? '3/4' : '4/3';
+    const featAspect = imagery === 'Immersive' ? '4/5' : '4/3';
+
+    // rhythm reshapes section padding + grid gaps
+    const rhythms = {
+      Spacious:{ secPad:'clamp(48px,7vw,88px) 0 0', gap:'clamp(20px,2.4vw,32px)' },
+      Standard:{ secPad:'clamp(34px,4.5vw,56px) 0 0', gap:'clamp(14px,1.8vw,22px)' },
+      Compact:{ secPad:'clamp(22px,3vw,36px) 0 0', gap:'clamp(10px,1.2vw,14px)' },
+    };
+    const r = rhythms[rhythm] || rhythms.Standard;
+
+    const categories = [
+      { name:'Most Popular', blurb:'The accessories other Subaru owners are adding right now.', img:this.img('assets/fig-real/cat-most-popular.png'), href:RESULTS },
+      { name:'Exterior', blurb:'Load carriers, towbars, running boards and protection.', img:this.img('assets/fig-real/cat-exterior.png'), href:RESULTS },
+      { name:'Interior', blurb:'Floor mats, cargo protection and cabin comfort details.', img:this.img('assets/fig-real/cat-interior.png'), href:RESULTS },
+    ];
+    const tiles = [
+      { name:'Most Popular', count:'24', img:this.img('uploads/Most Popular.jpg'), href:RESULTS },
+      { name:'Exterior', count:'38', img:this.img('uploads/Exterior.jpg'), href:RESULTS },
+      { name:'Interior', count:'42', img:this.img('uploads/Interior.jpg'), href:RESULTS },
+      { name:'Wheels & Tires', count:'16', img:this.img('uploads/Wheels Tires-c5700dc1.jpg'), href:RESULTS },
+      { name:'Cargo & Protection', count:'21', img:this.img('uploads/Cargo Protection.jpg'), href:RESULTS },
+      { name:'Roof & Load Carriers', count:'27', img:this.img('uploads/Roof Load Carriers.jpg'), href:RESULTS },
+      { name:'Comfort & Convenience', count:'19', img:this.img('uploads/Comfort Conveience.jpg'), href:RESULTS },
+      { name:'Pet-Friendly', count:'12', img:this.img('uploads/Protection Guards.jpg'), href:RESULTS },
+    ];
+    const PROD = 'Subaru Outback Accessories.dc.html?product=';
+    const featured = [
+      { cat:'Roof & Load Carriers', name:'Roof Cargo', price:'$899.00', img:this.img('uploads/roof cargo.jpg'), href:PROD+'p1' },
+      { cat:'Roof & Load Carriers', name:'Load Carrier', price:'$520.00', img:this.img('uploads/load carrier.jpg'), href:PROD+'p2' },
+      { cat:'Cargo & Protection', name:'Cargo Mat', price:'$165.00', img:this.img('uploads/cargo mat.jpg'), href:PROD+'p7' },
+      { cat:'Exterior', name:'Mudflaps, Front Set', price:'$120.00', img:this.img('uploads/mudflaps.jpg'), href:PROD+'p3' },
+    ];
+    return {
+      categories, tiles, featured,
+      pageBg:v.pageBg, h2Weight:v.h2Weight, heroScrim:v.heroScrim,
+      catOverlay:v.catOverlay, capBg:v.capBg, capTitle:v.capTitle, capBlurb:v.capBlurb,
+      capAbsolute, capImmersive:capAbsolute, capFramed:!capAbsolute,
+      heroPadY, catAspect, featAspect, secPad:r.secPad, gap:r.gap,
+    };
+  }
+}
+</script>
+</body>
+</html>
